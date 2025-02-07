@@ -1,7 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
-from textparser import split_nodes_delimiter
+from textparser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 
 class TestTextParser(unittest.TestCase):
     def test_bold_markdown(self):
@@ -52,3 +52,13 @@ class TestTextParser(unittest.TestCase):
         old_nodes.append(TextNode("Ooga *Booga", TextType.NORMAL))
         with self.assertRaises(Exception):
             new_nodes = split_nodes_delimiter(old_nodes, "*",  TextType.ITALIC)
+
+    def test_markdown_image_extraction(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        lst1 = [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+        self.assertEqual(lst1, extract_markdown_images(text))
+
+    def test_markdown_link_extraction(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        lst1 = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
+        self.assertEqual(lst1, extract_markdown_links(text))
