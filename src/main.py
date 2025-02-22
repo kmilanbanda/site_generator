@@ -1,7 +1,20 @@
+import shutil
+import  os
 from textnode import *
 
+dir_path_static = "./static"
+dir_path_public = "./public"
+
+def copy_static_to_public():
+    print("Deleting public directory...")
+    shutil.rmtree(dir_path_public)
+    print("Copying static files to public directory...")
+    shutil.copytree(dir_path_static, dir_path_public)
+
+def extract_title(markdown):
+    pass
+
 def main():
-    text_node = TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
-    print(text_node)
+    copy_static_to_public()
 
 main()
