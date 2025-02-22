@@ -17,7 +17,7 @@ class TestLeafNode(unittest.TestCase):
 
     def test_validation(self):
         child = LeafNode("p", "This is a child node")
-        node = LeafNode("p", "This node has children", child)
+        node = LeafNode("p", "This node has children", [child])
         self.assertIsNone(node.children)
 
 if __name__ == "__main__":

@@ -104,4 +104,6 @@ class TestTextParser(unittest.TestCase):
                 TextNode("link", TextType.LINK, "https://boot.dev")
             ]
         self.assertEqual(text_to_textnodes(text), lst1)
-        
+
+if __name__ == "__main__":
+    unittest.main()
