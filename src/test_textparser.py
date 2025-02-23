@@ -81,12 +81,22 @@ class TestTextParser(unittest.TestCase):
 
     def test_multi_image_markdown(self):
         text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
-        lst1 = [TextNode("This is text with a ", TextType.NORMAL), TextNode("rick roll", TextType.IMAGE, "https://i.imgur.com/aKaOqIh.gif"), TextNode(" and ", TextType.NORMAL), TextNode("obi wan", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg")]
+        lst1 = [
+            TextNode("This is text with a ", TextType.NORMAL), 
+            TextNode("rick roll", TextType.IMAGE, "https://i.imgur.com/aKaOqIh.gif"), 
+            TextNode(" and ", TextType.NORMAL), 
+            TextNode("obi wan", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg")
+        ]
         self.assertEqual(lst1, split_nodes_image([TextNode(text, TextType.NORMAL)]))
 
     def test_multi_link_markdown(self):
         text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
-        lst1 = [TextNode("This is text with a link ", TextType.NORMAL), TextNode("to boot dev", TextType.LINK, "https://www.boot.dev"), TextNode(" and ", TextType.NORMAL), TextNode("to youtube", TextType.LINK,  "https://www.youtube.com/@bootdotdev")]
+        lst1 = [
+            TextNode("This is text with a link ", TextType.NORMAL), 
+            TextNode("to boot dev", TextType.LINK, "https://www.boot.dev"), 
+            TextNode(" and ", TextType.NORMAL), 
+            TextNode("to youtube", TextType.LINK,  "https://www.youtube.com/@bootdotdev")
+        ]
         self.assertEqual(lst1, split_nodes_link([TextNode(text, TextType.NORMAL)]))
 
     def test_text_to_textnodes(self):

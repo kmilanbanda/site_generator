@@ -28,6 +28,14 @@ class TestHTMLNode(unittest.TestCase):
         lst = [node, node2]
         node3 = HTMLNode("a", "This is the text", lst, dict1)
         self.assertNotEqual(node, node3)
+    
+    def test_props_to_html(self):
+        dict1 = {
+            "href": "https://www.google.com"
+        }
+        
+        node = HTMLNode("a", "This is the text", None, dict1)
+        self.assertEqual(node.props_to_html(), " href=\"https://www.google.com\"")
 
 if __name__ == "__main__":
     unittest.main()

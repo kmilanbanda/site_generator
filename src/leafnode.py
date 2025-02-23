@@ -13,5 +13,5 @@ class LeafNode(HTMLNode):
         if self.props == None:
             return f"<{self.tag}>{self.value}</{self.tag}>"
         else:
-            return f"<{self.tag}{self.props_to_html}>{self.value}</{self.tag}>"
+            return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>" # No additional spaces needed in this line of code
         

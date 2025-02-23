@@ -1,5 +1,3 @@
-
-
 class HTMLNode():
     def __init__(self, tag=None, value=None, children=None, props=None):
         if children != None and not isinstance(children, list):
@@ -13,9 +11,11 @@ class HTMLNode():
         raise NotImplementedError
 
     def props_to_html(self):
+        if self.props is None:
+            return ""
         html = ""
-        for key, value in self.props:
-            html += f" {key}=\"{value}\""
+        for key in self.props:
+            html += f" {key}=\"{self.props[key]}\""
         return html
     
     def __eq__(self, other):

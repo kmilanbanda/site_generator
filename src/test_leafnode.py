@@ -20,5 +20,12 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode("p", "This node has children", [child])
         self.assertIsNone(node.children)
 
+    def test_props_to_html(self):
+        dict1 = {
+            "href": "https://www.google.com"
+        }
+        node = LeafNode("a", "This is the text", None, dict1)
+        self.assertEqual(node.to_html(), "<a href=\"https://www.google.com\">This is the text</a>")
+
 if __name__ == "__main__":
     unittest.main()
