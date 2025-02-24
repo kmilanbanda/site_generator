@@ -32,26 +32,37 @@ def generate_page(from_path, template_path, dest_path):
         new_file.write(html_page)
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    # open, read, and close template file
     with open(template_path) as template_file:
         template = template_file.read()
-    # !!! Currently not creating new directory and putting a file in there
-    # crawl every entry in the content directory
+
+    # get filepaths
     filepaths = os.listdir(dir_path_content)
-    # for each markdown file found, generate a new .html file using the template. Generated pages should end up in the public directory
+
+    # iterate through all filepaths
     for filepath in filepaths:
-        file_name = filepath.split("/")[-1]
-        full_path = os.path.join(dir_path_content, filepath)
-        if os.path.isdir(full_path):
+        # get the full "from" path (from my content)
+        from_path = os.path.join(dir_path_content, filepath)
+
+        # determine if the path points to a file or directory
+        if os.path.isdir(from_path):
+            # create the directory in public at dest_path
             dest_path = os.path.join(dest_dir_path, filepath)
             os.mkdir(dest_path)
-            generate_pages_recursive(full_path, template_path, dest_path)
+
+            # recursively call for the files within from_path to be generated and written to the public directory
+            generate_pages_recursive(from_path, template_path, dest_path)
         else:
-            with open(full_path) as md_file:
+            # open, read, and close the file
+            with open(from_path) as md_file:
                 markdown = md_file.read()
+            
+            # convert the markdown to html, extract the title, and create the html page from the template
             html = markdown_to_html_node(markdown).to_html()
             title = extract_title(markdown)
             html_page = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
 
+            # write the html page
             write_path = os.path.join(dest_dir_path, filepath[0:-2] + "html")
             with open(write_path, "w") as new_file:
                 new_file.write(html_page)
